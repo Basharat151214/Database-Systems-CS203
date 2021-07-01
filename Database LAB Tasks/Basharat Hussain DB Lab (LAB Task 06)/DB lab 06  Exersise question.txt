@@ -1,0 +1,285 @@
+
+mysql> 
+mysql> 
+mysql> /*   	  Lab 6: VIEWS & SQL Functions                      */
+mysql> /*    	  DATABASE SYSTEM LAB                		    */
+mysql> /*   	  CREATED BY: BASHARAT HUSSAIN      		    */
+mysql> /*   	  ROLL NO:  P17-6102                		    */
+mysql> /*   	  SECTION:   6B                     		    */
+mysql> /*   	  FAST NUCES PESHAWAR Campus        		    */
+mysql> /*    	  DATE: 10-APRIL-2021                		    */
+mysql> 
+mysql>
+
+mysql> /*---------------------------------------------------------EXERSISE Task-------------------------------------------------------------------*/
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.1-------------------------------------------------------------------*/
+
+mysql> CREATE VIEW EMPFR AS
+    ->SELECT *
+    ->FROM EMPLOYEE
+    ->WHERE PARK_CODE = 'FR1001'
+    ->WITH CHECK OPTION;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>
+
+mysql> SELECT * FROM EMPFR;
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+| EMP_NUM | EMP_TITLE | EMP_LNAME  | EMP_FNAME | EMP_DOB    | EMP_HIRE_DATE | EMP_AREA_CODE | EMP_PHONE | PARK_CODE |
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+|     100 | Ms        | Calderdale | Emma      | 1972-06-15 | 1992-03-15    | 0181          | 324-9134  | FR1001    |
+|     102 | Mr        | Arshad     | Arif      | 1969-11-14 | 1990-12-20    | 7253          | 675-8993  | FR1001    |
+|     105 | Ms        | Namowa     | Mirrelle  | 1990-03-14 | 2006-11-08    | 0181          | 890-3243  | FR1001    |
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+3 rows in set (0.05 sec)
+
+mysql> UPDATE EMPFR SET PARK_CODE ='UK3452' WHERE EMP_NUM =100;
+ERROR 1369 (HY000): CHECK OPTION failed 'bs_6b.empfr'
+mysql>
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.2-------------------------------------------------------------------*/
+
+
+mysql>
+mysql>
+mysql> select EMP_PHONE FROM EMPFR WHERE EMP_NUM = '100';
++-----------+
+| EMP_PHONE |
++-----------+
+| 324-9134  |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMPFR SET EMP_PHONE = '324-9652' WHERE EMP_NUM = '100';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> select EMP_PHONE FROM EMPFR WHERE EMP_NUM = '100';
++-----------+
+| EMP_PHONE |
++-----------+
+| 324-9652  |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> DROP VIEW EMPFR;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>
+
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.3-------------------------------------------------------------------*/
+
+
+mysql> CREATE VIEW TPARKSSOLD AS
+    -> SELECT T.PARK_CODE,T.PARK_NAME, T.PARK_CITY,T.PARK_COUNTRY FROM
+    -> THEMEPARK T NATURAL JOIN SALES S
+    -> WHERE T.PARK_CODE = S.PARK_CODE
+    -> GROUP BY PARK_CODE;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM TPARKSSOLD;
++-----------+--------------+--------------+--------------+
+| PARK_CODE | PARK_NAME    | PARK_CITY    | PARK_COUNTRY |
++-----------+--------------+--------------+--------------+
+| FR1001    | FairyLand    | PARIS        | FR           |
+| UK3452    | PleasureLand | STOKE        | UK           |
+| ZA1342    | GoldTown     | JOHANNESBURG | ZA           |
++-----------+--------------+--------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE TPARKSSOLD;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| PARK_CODE    | varchar(10) | NO   |     | NULL    |       |
+| PARK_NAME    | varchar(35) | NO   |     | NULL    |       |
+| PARK_CITY    | varchar(50) | NO   |     | NULL    |       |
+| PARK_COUNTRY | char(2)     | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql>
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.4-------------------------------------------------------------------*/
+
+
+
+
+mysql> CREATE VIEW EMP_DETAILS AS
+    -> SELECT  E.EMP_NUM, E.PARK_CODE, T.PARK_NAME,E.EMP_LNAME, E.EMP_FNAME, E.EMP_HIRE_DATE, E.EMP_DOB
+    -> FROM EMPLOYEE E JOIN THEMEPARK T
+    -> WHERE E.PARK_CODE = T.PARK_CODE;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> SELECT * FROM EMP_DETAILS;
++---------+-----------+--------------+------------+-----------+---------------+------------+
+| EMP_NUM | PARK_CODE | PARK_NAME    | EMP_LNAME  | EMP_FNAME | EMP_HIRE_DATE | EMP_DOB    |
++---------+-----------+--------------+------------+-----------+---------------+------------+
+|     100 | FR1001    | FairyLand    | Calderdale | Emma      | 1992-03-15    | 1972-06-15 |
+|     101 | UK3452    | PleasureLand | Ricardo    | Marshel   | 1996-04-25    | 1978-03-19 |
+|     102 | FR1001    | FairyLand    | Arshad     | Arif      | 1990-12-20    | 1969-11-14 |
+|     103 | UK3452    | PleasureLand | Roberts    | Anne      | 1994-08-16    | 1974-10-16 |
+|     104 | ZA1342    | GoldTown     | Denver     | Enrica    | 2001-10-20    | 1980-11-08 |
+|     105 | FR1001    | FairyLand    | Namowa     | Mirrelle  | 2006-11-08    | 1990-03-14 |
+|     106 | ZA1342    | GoldTown     | Smith      | Gemma     | 1989-01-05    | 1968-02-12 |
++---------+-----------+--------------+------------+-----------+---------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> DESCRIBE EMP_DETAILS;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| EMP_NUM       | decimal(4,0) | NO   |     | NULL    |       |
+| PARK_CODE     | varchar(10)  | YES  |     | NULL    |       |
+| PARK_NAME     | varchar(35)  | NO   |     | NULL    |       |
+| EMP_LNAME     | varchar(15)  | NO   |     | NULL    |       |
+| EMP_FNAME     | varchar(15)  | NO   |     | NULL    |       |
+| EMP_HIRE_DATE | date         | YES  |     | NULL    |       |
+| EMP_DOB       | date         | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.5-------------------------------------------------------------------*/
+
+
+mysql>
+mysql> SELECT EMP_FNAME,EMP_LNAME,PARK_NAME FROM EMP_DETAILS;
++-----------+------------+--------------+
+| EMP_FNAME | EMP_LNAME  | PARK_NAME    |
++-----------+------------+--------------+
+| Emma      | Calderdale | FairyLand    |
+| Marshel   | Ricardo    | PleasureLand |
+| Arif      | Arshad     | FairyLand    |
+| Anne      | Roberts    | PleasureLand |
+| Enrica    | Denver     | GoldTown     |
+| Mirrelle  | Namowa     | FairyLand    |
+| Gemma     | Smith      | GoldTown     |
++-----------+------------+--------------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.6-------------------------------------------------------------------*/
+
+
+mysql>
+mysql> SELECT PARK_NAME,MIN(LINE_PRICE),MAX(LINE_PRICE)
+    -> FROM SALES_LINE  JOIN SALES
+    -> ON SALES_LINE.TRANSACTION_NO = SALES.TRANSACTION_NO
+    -> JOIN THEMEPARK
+    -> ON SALES.PARK_CODE = THEMEPARK.PARK_CODE
+    -> GROUP BY PARK_NAME;
++--------------+-----------------+-----------------+
+| PARK_NAME    | MIN(LINE_PRICE) | MAX(LINE_PRICE) |
++--------------+-----------------+-----------------+
+| FairyLand    |           14.99 |          139.96 |
+| GoldTown     |           12.12 |          114.68 |
+| PleasureLand |           21.98 |          168.40 |
++--------------+-----------------+-----------------+
+3 rows in set (0.00 sec)
+
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.7-------------------------------------------------------------------*/
+
+
+mysql>
+mysql>
+mysql> SELECT DISTINCT (DATE_FORMAT(SALE_DATE, '%a-%d-%c-%y')) FROM SALES;
++-----------------------------------------+
+| (DATE_FORMAT(SALE_DATE, '%a-%d-%c-%y')) |
++-----------------------------------------+
+| Fri-18-5-07                             |
++-----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.8-------------------------------------------------------------------*/
+
+
+mysql> SELECT EMP_FNAME, EMP_LNAME,
+    -> CONCAT(DATE_FORMAT(EMP_DOB,'%m'),
+    -> DATE_FORMAT(EMP_DOB, '%d'),SUBSTR(UPPER(EMP_LNAME),1,6))
+    -> AS USER_ID FROM EMPLOYEE;
++-----------+------------+------------+
+| EMP_FNAME | EMP_LNAME  | USER_ID    |
++-----------+------------+------------+
+| Emma      | Calderdale | 0615CALDER |
+| Marshel   | Ricardo    | 0319RICARD |
+| Arif      | Arshad     | 1114ARSHAD |
+| Anne      | Roberts    | 1016ROBERT |
+| Enrica    | Denver     | 1108DENVER |
+| Mirrelle  | Namowa     | 0314NAMOWA |
+| Gemma     | Smith      | 0212SMITH  |
++-----------+------------+------------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.9-------------------------------------------------------------------*/
+
+
+
+mysql> SELECT EMP_LNAME,EMP_FNAME, EMP_DOB,DATE_FORMAT(EMP_DOB,'%D') AS BORN_DAY_OF_MONTH FROM EMPLOYEE
+    -> WHERE DAYOFMONTH(EMP_DOB)='14';
++-----------+-----------+------------+-------------------+
+| EMP_LNAME | EMP_FNAME | EMP_DOB    | BORN_DAY_OF_MONTH |
++-----------+-----------+------------+-------------------+
+| Arshad    | Arif      | 1969-11-14 | 14th              |
+| Namowa    | Mirrelle  | 1990-03-14 | 14th              |
++-----------+-----------+------------+-------------------+
+2 rows in set (0.00 sec)
+
+
+
+mysql> /*---------------------------------------------------------Question E 6.10-------------------------------------------------------------------*/
+
+mysql>
+mysql>
+mysql> SELECT CONCAT( SUBSTR(EMP_PHONE,1,3),SUBSTR(LOWER(EMP_FNAME),1,2))
+    -> AS USER_PASSWORD
+    -> FROM EMPLOYEE;
++---------------+
+| USER_PASSWORD |
++---------------+
+| 324em         |
+| 324ma         |
+| 675ar         |
+| 898an         |
+| 504en         |
+| 890mi         |
+| 324ge         |
++---------------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+mysql> /*---------------------------------------------------------THE END-------------------------------------------------------------------*/

@@ -1,0 +1,321 @@
+mysql> 
+mysql> 
+mysql> /*   	  LAB TASK # 03 Basic SELECT statements             */
+mysql> /*    	  DATABASE SYSTEM LAB                		    */
+mysql> /*   	  CREATED BY: BASHARAT HUSSAIN      		    */
+mysql> /*   	  ROLL NO:  P17-6102                		    */
+mysql> /*   	  SECTION:   6B                     		    */
+mysql> /*   	  FAST NUCES PESHAWAR Campus        		    */
+mysql> /*    	  DATE: 20-MARCH-2021                		    */
+mysql> 
+mysql>
+
+
+
+
+
+mysql> /*---------------------------------------------------------Exercises-------------------------------------------------------------------*/
+
+
+
+mysql> /*--------------------------Question.1 Write a query to display all Theme Parks except those in the UK.------------------------------- */
+
+
+mysql> select * from themepark
+    -> where NOT (park_country ="UK");
++-----------+---------------+--------------+--------------+
+| PARK_CODE | PARK_NAME     | PARK_CITY    | PARK_COUNTRY |
++-----------+---------------+--------------+--------------+
+| FR1001    | FairyLand     | PARIS        | FR           |
+| NL1202    | Efling        | NOORD        | NL           |
+| SP4533    | AdventurePort | BARCELONA    | SP           |
+| SW2323    | Labyrinthe    | LAUSANNE     | SW           |
+| ZA1342    | GoldTown      | JOHANNESBURG | ZA           |
++-----------+---------------+--------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql> /*------------------------Question.2 Write a query to display all the sales that occurred on the 18th May 2007------------------------------*/
+
+
+mysql> select * from sales
+    -> where sale_date = '2007-05-18';
++----------------+-----------+------------+
+| TRANSACTION_NO | PARK_CODE | SALE_DATE  |
++----------------+-----------+------------+
+|          12781 | FR1001    | 2007-05-18 |
+|          12782 | FR1001    | 2007-05-18 |
+|          12783 | FR1001    | 2007-05-18 |
+|          12784 | FR1001    | 2007-05-18 |
+|          12785 | FR1001    | 2007-05-18 |
+|          12786 | FR1001    | 2007-05-18 |
+|          34534 | UK3452    | 2007-05-18 |
+|          34535 | UK3452    | 2007-05-18 |
+|          34536 | UK3452    | 2007-05-18 |
+|          34537 | UK3452    | 2007-05-18 |
+|          34538 | UK3452    | 2007-05-18 |
+|          34539 | UK3452    | 2007-05-18 |
+|          34540 | UK3452    | 2007-05-18 |
+|          34541 | UK3452    | 2007-05-18 |
+|          67589 | ZA1342    | 2007-05-18 |
+|          67590 | ZA1342    | 2007-05-18 |
+|          67591 | ZA1342    | 2007-05-18 |
+|          67592 | ZA1342    | 2007-05-18 |
+|          67593 | ZA1342    | 2007-05-18 |
++----------------+-----------+------------+
+19 rows in set (0.02 sec)
+
+mysql>
+
+
+
+
+mysql> /*-----------------------------------Question.3 Write a query to display the ticket prices between €20 AND €30-------------------------*/
+
+mysql> select ticket_price from ticket
+    -> where ticket_price between 20 and 30 ;
++--------------+
+| ticket_price |
++--------------+
+|        24.99 |
+|        20.99 |
+|        28.67 |
+|        22.50 |
++--------------+
+4 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> /*-----------------------Question.4  Display all attractions that have a capacity of more than 60 at the Theme Park FR1001.---------------------*/
+
+
+mysql> select * from attraction
+    -> where attract_capacity >60 and park_code = "FR1001";
++------------+-----------------+-------------+------------------+-----------+
+| ATTRACT_NO | ATTRACT_NAME    | ATTRACT_AGE | ATTRACT_CAPACITY | PARK_CODE |
++------------+-----------------+-------------+------------------+-----------+
+|      10056 | SpinningTeacups |           4 |               62 | FR1001    |
+|      10098 | Carnival        |           3 |              120 | FR1001    |
++------------+-----------------+-------------+------------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql>/*-----------------Question.5      Write a query to display the hourly rate for each attraction where an employee had
+                        		 worked, along with the hourly rate increased by 20%. Your query should only
+                         		 Display the ATTRACT_NO, HOUR_RATE and the HOUR_RATE with the 20%
+                        		 Increase.                               ------------------------------------------------------------------- */
+
+
+
+mysql>
+mysql>
+mysql> select attract_no, hour_rate,
+    -> hour_rate + ROUND((hour_rate*0.2),2)
+    -> from hours;
++------------+-----------+--------------------------------------+
+| attract_no | hour_rate | hour_rate + ROUND((hour_rate*0.2),2) |
++------------+-----------+--------------------------------------+
+|      10034 |      6.50 |                                 7.80 |
+|      10034 |      6.50 |                                 7.80 |
+|      10034 |      6.50 |                                 7.80 |
+|      30012 |      5.99 |                                 7.19 |
+|      30044 |      5.99 |                                 7.19 |
+|      30044 |      5.99 |                                 7.19 |
+|      30011 |      7.20 |                                 8.64 |
+|      30012 |      7.20 |                                 8.64 |
+|      10078 |      8.50 |                                10.20 |
+|      10098 |      8.50 |                                10.20 |
+|      10098 |      8.50 |                                10.20 |
++------------+-----------+--------------------------------------+
+11 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> /*--------------------------------------Question.6 Elaborate Difference (IN vs BETWEEN) operators with examples.----------------------------*/
+
+
+		---------------------  IN Operater----------------------
+
+The IN operator is used to test for values which are in a list. 
+The following query finds
+only the rows in the SALES_LINE table that match up to a specific sales transaction. 
+i.e.
+TRANSACTION_NO is either 12781 or 67593.
+
+
+mysql> SELECT *
+    -> FROM SALES_LINE
+    -> WHERE TRANSACTION_NO IN (12781, 67593);
++----------------+---------+-----------+----------+------------+
+| TRANSACTION_NO | LINE_NO | TICKET_NO | LINE_QTY | LINE_PRICE |
++----------------+---------+-----------+----------+------------+
+|          12781 |       1 |     13002 |        2 |      69.98 |
+|          12781 |       2 |     13001 |        1 |      14.99 |
+|          67593 |       1 |     67833 |        2 |      57.34 |
+|          67593 |       2 |     67832 |        2 |      37.12 |
++----------------+---------+-----------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql>
+
+
+
+		---------------------------------BETWEEN Operater----------------------------
+
+
+The operator BETWEEN may be used to check whether an attribute value is within a
+range of values. 
+For example, if you want to see a listing for all tickets whose prices are
+between €30 and €50, use the following command sequence:
+
+mysql>
+mysql> SELECT *
+    -> FROM TICKET
+    -> WHERE TICKET_PRICE BETWEEN 30.00 AND 50.00;
++-----------+--------------+-------------+-----------+
+| TICKET_NO | TICKET_PRICE | TICKET_TYPE | PARK_CODE |
++-----------+--------------+-------------+-----------+
+|     13002 |        34.99 | Adult       | FR1001    |
+|     88568 |        42.10 | Adult       | UK3452    |
++-----------+--------------+-------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+mysql> /*------------------------Question.7 Write a query to display all unique employees that exist in the HOURS table.----------------------*/
+
+mysql>
+mysql> select DISTINCT emp_num
+    -> from hours;
++---------+
+| emp_num |
++---------+
+|     100 |
+|     101 |
+|     102 |
+|     104 |
+|     105 |
++---------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+mysql> /*---------Question.8 Display all information from the SALES table in descending order of the sale date.------------------------------*/
+
+
+mysql> select * from sales
+    -> order by sale_date DESC;
++----------------+-----------+------------+
+| TRANSACTION_NO | PARK_CODE | SALE_DATE  |
++----------------+-----------+------------+
+|          12781 | FR1001    | 2007-05-18 |
+|          12782 | FR1001    | 2007-05-18 |
+|          12783 | FR1001    | 2007-05-18 |
+|          12784 | FR1001    | 2007-05-18 |
+|          12785 | FR1001    | 2007-05-18 |
+|          12786 | FR1001    | 2007-05-18 |
+|          34534 | UK3452    | 2007-05-18 |
+|          34535 | UK3452    | 2007-05-18 |
+|          34536 | UK3452    | 2007-05-18 |
+|          34537 | UK3452    | 2007-05-18 |
+|          34538 | UK3452    | 2007-05-18 |
+|          34539 | UK3452    | 2007-05-18 |
+|          34540 | UK3452    | 2007-05-18 |
+|          34541 | UK3452    | 2007-05-18 |
+|          67589 | ZA1342    | 2007-05-18 |
+|          67590 | ZA1342    | 2007-05-18 |
+|          67591 | ZA1342    | 2007-05-18 |
+|          67592 | ZA1342    | 2007-05-18 |
+|          67593 | ZA1342    | 2007-05-18 |
++----------------+-----------+------------+
+19 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+mysql> /*--------Question.9  Write a query to show the transaction numbers and lineprices (in the SALES_LINE table) that are greater than €50.---------*/
+
+
+mysql>
+mysql>
+mysql>
+mysql> select transaction_no,line_price
+    -> from sales_line
+    -> where line_price > 50;
++----------------+------------+
+| transaction_no | line_price |
++----------------+------------+
+|          12781 |      69.98 |
+|          12782 |      69.98 |
+|          12785 |     139.96 |
+|          34534 |     168.40 |
+|          34535 |      84.20 |
+|          34537 |      84.20 |
+|          34539 |      84.20 |
+|          34540 |     168.40 |
+|          34541 |      84.20 |
+|          67589 |      57.34 |
+|          67590 |      57.34 |
+|          67592 |     114.68 |
+|          67593 |      57.34 |
++----------------+------------+
+13 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+mysql> /*--------Question.10  Write a query to display only the last two Employee Record (EMP_NUM,EMP_FNAME) in descending order.--------------*/
+
+mysql>
+mysql>
+mysql>
+mysql> select * from (
+    -> select * from employee
+    -> order by emp_num DESC LIMIT 2)
+    -> sub
+    -> order by emp_num ASC;
++---------+-----------+-----------+-----------+------------+---------------+---------------+-----------+-----------+
+| EMP_NUM | EMP_TITLE | EMP_LNAME | EMP_FNAME | EMP_DOB    | EMP_HIRE_DATE | EMP_AREA_CODE | EMP_PHONE | PARK_CODE |
++---------+-----------+-----------+-----------+------------+---------------+---------------+-----------+-----------+
+|     105 | Ms        | Namowa    | Mirrelle  | 1990-03-14 | 2006-11-08    | 0181          | 890-3243  | FR1001    |
+|     106 | Mrs       | Smith     | Gemma     | 1968-02-12 | 1989-01-05    | 0181          | 324-7845  | ZA1342    |
++---------+-----------+-----------+-----------+------------+---------------+---------------+-----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+
+
+mysql> 
+mysql> 
+mysql> /*   	  BONUS TASK                                       */
+mysql> /*    	  DATABASE SYSTEM LAB                		    */
+mysql> /*   	  CREATED BY: BASHARAT HUSSAIN      		    */
+mysql> /*   	  ROLL NO:  P17-6102                		    */
+mysql> /*   	  SECTION:   6B                     		    */
+mysql> /*   	  FAST NUCES PESHAWAR Campus        		    */
+mysql> /*    	  DATE: 20-MARCH-2021                		    */
+mysql> 
+mysql>
+
+
+
+
+
+mysql> /*---------------------------------------------------------BONUS TASK-------------------------------------------------------------------*/
+
+
+
+mysql> /*--------------------------Question.1 .------------------------------- */
+
+
+
+
+
+mysql>
+mysql>
+mysql>
+mysql> select emp_num, SUM(hours_per_attract)
+    -> from hours
+    -> GROUP BY emp_num;
++---------+------------------------+
+| emp_num | SUM(hours_per_attract) |
++---------+------------------------+
+|     100 |                     12 |
+|     101 |                      6 |
+|     102 |                     12 |
+|     104 |                     12 |
+|     105 |                     12 |
++---------+------------------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+mysql> /*--------------------------Question.2 .------------------------------- */
+
+
+
+mysql>
+mysql>
+mysql> select employee.emp_lname,employee.emp_fname
+    -> ,
+    -> hours.attract_no, hours.date_worked from hours
+    -> INNER JOIN employee ON hours.emp_num = employee.emp_num;
++------------+-----------+------------+-------------+
+| emp_lname  | emp_fname | attract_no | date_worked |
++------------+-----------+------------+-------------+
+| Calderdale | Emma      |      10034 | 2007-05-18  |
+| Calderdale | Emma      |      10034 | 2007-05-20  |
+| Ricardo    | Marshel   |      10034 | 2007-05-18  |
+| Arshad     | Arif      |      30012 | 2007-05-23  |
+| Arshad     | Arif      |      30044 | 2007-05-21  |
+| Arshad     | Arif      |      30044 | 2007-05-22  |
+| Denver     | Enrica    |      30011 | 2007-05-21  |
+| Denver     | Enrica    |      30012 | 2007-05-22  |
+| Namowa     | Mirrelle  |      10078 | 2007-05-18  |
+| Namowa     | Mirrelle  |      10098 | 2007-05-18  |
+| Namowa     | Mirrelle  |      10098 | 2007-05-19  |
++------------+-----------+------------+-------------+
+11 rows in set (0.00 sec)
+
+mysql>
+
+
+

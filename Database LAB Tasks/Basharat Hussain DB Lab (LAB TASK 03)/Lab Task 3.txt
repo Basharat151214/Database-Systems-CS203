@@ -1,0 +1,297 @@
+
+mysql> 
+mysql> 
+mysql> /*   	  LAB TASK # 03 Basic SELECT statements             */
+mysql> /*    	  DATABASE SYSTEM LAB                		    */
+mysql> /*   	  CREATED BY: BASHARAT HUSSAIN      		    */
+mysql> /*   	  ROLL NO:  P17-6102                		    */
+mysql> /*   	  SECTION:   6B                     		    */
+mysql> /*   	  FAST NUCES PESHAWAR Campus        		    */
+mysql> /*    	  DATE: 20-MARCH-2021                		    */
+mysql> 
+mysql>
+
+
+
+
+				mysql> /*------------Arthimatic operation -------*/
+
+mysql> SELECT PARK_CODE, TICKET_NO, TICKET_TYPE, TICKET_PRICE,
+    -> TICKET_PRICE + ROUND((TICKET_PRICE *0.1),2)
+    -> FROM TICKET;
++-----------+-----------+-------------+--------------+---------------------------------------------+
+| PARK_CODE | TICKET_NO | TICKET_TYPE | TICKET_PRICE | TICKET_PRICE + ROUND((TICKET_PRICE *0.1),2) |
++-----------+-----------+-------------+--------------+---------------------------------------------+
+| SP4533    |     11001 | Adult       |        24.99 |                                       27.49 |
+| SP4533    |     11002 | Child       |        14.99 |                                       16.49 |
+| SP4533    |     11003 | Senior      |        10.99 |                                       12.09 |
+| FR1001    |     13001 | Child       |        18.99 |                                       20.89 |
+| FR1001    |     13002 | Adult       |        34.99 |                                       38.49 |
+| FR1001    |     13003 | Senior      |        20.99 |                                       23.09 |
+| ZA1342    |     67832 | Child       |        18.56 |                                       20.42 |
+| ZA1342    |     67833 | Adult       |        28.67 |                                       31.54 |
+| ZA1342    |     67855 | Senior      |        12.12 |                                       13.33 |
+| UK3452    |     88567 | Child       |        22.50 |                                       24.75 |
+| UK3452    |     88568 | Adult       |        42.10 |                                       46.31 |
+| UK3452    |     89720 | Senior      |        10.99 |                                       12.09 |
++-----------+-----------+-------------+--------------+---------------------------------------------+
+12 rows in set (0.00 sec)
+
+
+				mysql> /*------------Arthimatic operation -------*/
+
+
+
+mysql> SELECT PARK_CODE, TICKET_NO, TICKET_TYPE, TICKET_PRICE,
+    -> TICKET_PRICE + ROUND((TICKET_PRICE *0.1),2) PRICE_INCREASE
+    -> FROM TICKET;
++-----------+-----------+-------------+--------------+----------------+
+| PARK_CODE | TICKET_NO | TICKET_TYPE | TICKET_PRICE | PRICE_INCREASE |
++-----------+-----------+-------------+--------------+----------------+
+| SP4533    |     11001 | Adult       |        24.99 |          27.49 |
+| SP4533    |     11002 | Child       |        14.99 |          16.49 |
+| SP4533    |     11003 | Senior      |        10.99 |          12.09 |
+| FR1001    |     13001 | Child       |        18.99 |          20.89 |
+| FR1001    |     13002 | Adult       |        34.99 |          38.49 |
+| FR1001    |     13003 | Senior      |        20.99 |          23.09 |
+| ZA1342    |     67832 | Child       |        18.56 |          20.42 |
+| ZA1342    |     67833 | Adult       |        28.67 |          31.54 |
+| ZA1342    |     67855 | Senior      |        12.12 |          13.33 |
+| UK3452    |     88567 | Child       |        22.50 |          24.75 |
+| UK3452    |     88568 | Adult       |        42.10 |          46.31 |
+| UK3452    |     89720 | Senior      |        10.99 |          12.09 |
++-----------+-----------+-------------+--------------+----------------+
+12 rows in set (0.00 sec)
+
+
+
+					mysql> /*------------Greater Than---------*/
+
+
+mysql> SELECT PARK_CODE, TICKET_TYPE, TICKET_PRICE
+    -> FROM TICKET
+    -> WHERE TICKET_PRICE > 20;
++-----------+-------------+--------------+
+| PARK_CODE | TICKET_TYPE | TICKET_PRICE |
++-----------+-------------+--------------+
+| SP4533    | Adult       |        24.99 |
+| FR1001    | Adult       |        34.99 |
+| FR1001    | Senior      |        20.99 |
+| ZA1342    | Adult       |        28.67 |
+| UK3452    | Child       |        22.50 |
+| UK3452    | Adult       |        42.10 |
++-----------+-------------+--------------+
+6 rows in set (0.00 sec)
+
+
+					mysql> /*------------Character comparisons operator----------*/
+
+mysql> SELECT PARK_CODE, PARK_NAME, PARK_COUNTRY
+    -> FROM THEMEPARK
+    -> WHERE PARK_CODE < "UK2262";
++-----------+---------------+--------------+
+| PARK_CODE | PARK_NAME     | PARK_COUNTRY |
++-----------+---------------+--------------+
+| FR1001    | FairyLand     | FR           |
+| NL1202    | Efling        | NL           |
+| SP4533    | AdventurePort | SP           |
+| SW2323    | Labyrinthe    | SW           |
++-----------+---------------+--------------+
+4 rows in set (0.00 sec)
+
+
+				mysql> /*------------Between operator----------*/
+
+
+mysql> SELECT *
+    -> FROM TICKET
+    -> WHERE TICKET_PRICE BETWEEN 30.00 AND 50.00;
++-----------+--------------+-------------+-----------+
+| TICKET_NO | TICKET_PRICE | TICKET_TYPE | PARK_CODE |
++-----------+--------------+-------------+-----------+
+|     13002 |        34.99 | Adult       | FR1001    |
+|     88568 |        42.10 | Adult       | UK3452    |
++-----------+--------------+-------------+-----------+
+2 rows in set (0.00 sec)
+
+
+
+				mysql> /*------------In operator----------*/
+
+mysql> SELECT *
+    -> FROM SALES_LINE
+    -> WHERE TRANSACTION_NO IN (12781, 67593);
++----------------+---------+-----------+----------+------------+
+| TRANSACTION_NO | LINE_NO | TICKET_NO | LINE_QTY | LINE_PRICE |
++----------------+---------+-----------+----------+------------+
+|          12781 |       1 |     13002 |        2 |      69.98 |
+|          12781 |       2 |     13001 |        1 |      14.99 |
+|          67593 |       1 |     67833 |        2 |      57.34 |
+|          67593 |       2 |     67832 |        2 |      37.12 |
++----------------+---------+-----------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql>
+
+
+				mysql> /*------------LIKE  operator----------*/
+
+
+
+mysql> SELECT EMP_LNAME, EMP_FNAME, EMP_NUM
+    -> FROM EMPLOYEE
+    -> WHERE EMP_FNAME LIKE "A%";
++-----------+-----------+---------+
+| EMP_LNAME | EMP_FNAME | EMP_NUM |
++-----------+-----------+---------+
+| Arshad    | Arif      |     102 |
+| Roberts   | Anne      |     103 |
++-----------+-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+				mysql> /*------------NULL  operator----------*/
+
+mysql> SELECT *
+    -> FROM ATTRACTION
+    -> WHERE ATTRACT_NAME IS NULL;
++------------+--------------+-------------+------------------+-----------+
+| ATTRACT_NO | ATTRACT_NAME | ATTRACT_AGE | ATTRACT_CAPACITY | PARK_CODE |
++------------+--------------+-------------+------------------+-----------+
+|      10082 | NULL         |          10 |               40 | ZA1342    |
++------------+--------------+-------------+------------------+-----------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+	
+			mysql> /*------------AND  logical operator----------*/
+
+
+mysql> SELECT EMP_NUM, ATTRACT_NO
+    -> FROM HOURS
+    -> WHERE HOURS_PER_ATTRACT > 3
+    -> AND DATE_WORKED > '2007-05-18';
++---------+------------+
+| EMP_NUM | ATTRACT_NO |
++---------+------------+
+|     100 |      10034 |
+|     102 |      30044 |
+|     104 |      30011 |
+|     104 |      30012 |
+|     105 |      10098 |
++---------+------------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+					mysql> /*------------OR  logical operator----------*/
+	
+mysql> SELECT PARK_NAME, PARK_COUNTRY
+    -> FROM THEMEPARK
+    -> WHERE PARK_COUNTRY = 'FR'
+    -> OR PARK_COUNTRY = 'UK';
++--------------+--------------+
+| PARK_NAME    | PARK_COUNTRY |
++--------------+--------------+
+| FairyLand    | FR           |
+| MiniLand     | UK           |
+| PleasureLand | UK           |
++--------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql>
+
+					mysql> /*------------NOT  logical operator----------*/
+
+mysql> SELECT *
+    -> FROM EMPLOYEE
+    -> WHERE NOT (EMP_NUM = 106);
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+| EMP_NUM | EMP_TITLE | EMP_LNAME  | EMP_FNAME | EMP_DOB    | EMP_HIRE_DATE | EMP_AREA_CODE | EMP_PHONE | PARK_CODE |
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+|     100 | Ms        | Calderdale | Emma      | 1972-06-15 | 1992-03-15    | 0181          | 324-9134  | FR1001    |
+|     101 | Ms        | Ricardo    | Marshel   | 1978-03-19 | 1996-04-25    | 0181          | 324-4472  | UK3452    |
+|     102 | Mr        | Arshad     | Arif      | 1969-11-14 | 1990-12-20    | 7253          | 675-8993  | FR1001    |
+|     103 | Ms        | Roberts    | Anne      | 1974-10-16 | 1994-08-16    | 0181          | 898-3456  | UK3452    |
+|     104 | Mr        | Denver     | Enrica    | 1980-11-08 | 2001-10-20    | 7253          | 504-4434  | ZA1342    |
+|     105 | Ms        | Namowa     | Mirrelle  | 1990-03-14 | 2006-11-08    | 0181          | 890-3243  | FR1001    |
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql>
+
+
+					mysql> /*------------Sorting commands----------*/
+
+mysql> SELECT *
+    -> FROM EMPLOYEE
+    -> ORDER BY EMP_HIRE_DATE DESC;
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+| EMP_NUM | EMP_TITLE | EMP_LNAME  | EMP_FNAME | EMP_DOB    | EMP_HIRE_DATE | EMP_AREA_CODE | EMP_PHONE | PARK_CODE |
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+|     105 | Ms        | Namowa     | Mirrelle  | 1990-03-14 | 2006-11-08    | 0181          | 890-3243  | FR1001    |
+|     104 | Mr        | Denver     | Enrica    | 1980-11-08 | 2001-10-20    | 7253          | 504-4434  | ZA1342    |
+|     101 | Ms        | Ricardo    | Marshel   | 1978-03-19 | 1996-04-25    | 0181          | 324-4472  | UK3452    |
+|     103 | Ms        | Roberts    | Anne      | 1974-10-16 | 1994-08-16    | 0181          | 898-3456  | UK3452    |
+|     100 | Ms        | Calderdale | Emma      | 1972-06-15 | 1992-03-15    | 0181          | 324-9134  | FR1001    |
+|     102 | Mr        | Arshad     | Arif      | 1969-11-14 | 1990-12-20    | 7253          | 675-8993  | FR1001    |
+|     106 | Mrs       | Smith      | Gemma     | 1968-02-12 | 1989-01-05    | 0181          | 324-7845  | ZA1342    |
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+					mysql> /*------------Sorting commands----------*/
+
+
+mysql> SELECT *
+    -> FROM EMPLOYEE
+    -> ORDER BY EMP_LNAME, EMP_FNAME;
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+| EMP_NUM | EMP_TITLE | EMP_LNAME  | EMP_FNAME | EMP_DOB    | EMP_HIRE_DATE | EMP_AREA_CODE | EMP_PHONE | PARK_CODE |
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+|     102 | Mr        | Arshad     | Arif      | 1969-11-14 | 1990-12-20    | 7253          | 675-8993  | FR1001    |
+|     100 | Ms        | Calderdale | Emma      | 1972-06-15 | 1992-03-15    | 0181          | 324-9134  | FR1001    |
+|     104 | Mr        | Denver     | Enrica    | 1980-11-08 | 2001-10-20    | 7253          | 504-4434  | ZA1342    |
+|     105 | Ms        | Namowa     | Mirrelle  | 1990-03-14 | 2006-11-08    | 0181          | 890-3243  | FR1001    |
+|     101 | Ms        | Ricardo    | Marshel   | 1978-03-19 | 1996-04-25    | 0181          | 324-4472  | UK3452    |
+|     103 | Ms        | Roberts    | Anne      | 1974-10-16 | 1994-08-16    | 0181          | 898-3456  | UK3452    |
+|     106 | Mrs       | Smith      | Gemma     | 1968-02-12 | 1989-01-05    | 0181          | 324-7845  | ZA1342    |
++---------+-----------+------------+-----------+------------+---------------+---------------+-----------+-----------+
+7 rows in set (0.00 sec)
+
+					mysql> /*------------Sorting commands----------*/
+
+mysql> SELECT TICKET_TYPE, PARK_CODE
+    -> FROM TICKET
+    -> WHERE (TICKET_PRICE > 15 AND TICKET_TYPE LIKE 'Child')
+    -> ORDER BY TICKET_NO DESC;
++-------------+-----------+
+| TICKET_TYPE | PARK_CODE |
++-------------+-----------+
+| Child       | UK3452    |
+| Child       | ZA1342    |
+| Child       | FR1001    |
++-------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql>
+
+
+					mysql> /*------------ Listing Unique Values commands----------*/
+
+mysql> SELECT DISTINCT(PARK_CODE)
+    -> FROM ATTRACTION;
++-----------+
+| PARK_CODE |
++-----------+
+| FR1001    |
+| UK3452    |
+| ZA1342    |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql>
