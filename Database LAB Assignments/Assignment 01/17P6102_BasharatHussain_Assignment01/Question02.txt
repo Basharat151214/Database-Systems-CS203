@@ -1,0 +1,194 @@
+mysql> 
+mysql> /*               ASSIGNMENT # 01                 */
+mysql> /*      DATABASE SYSTEM LAB                      */
+mysql> /*      CREATED BY: BASHARAT HUSSAIN             */
+mysql> /*      ROLL NO:  P17-6102                       */
+mysql> /*      SECTION:   6B                            */
+mysql> /*      FAST NUCES PESHAWAR Campus               */
+mysql> /*      DATE: 24-APRIL-2021                      */
+mysql> 
+mysql> 
+mysql> /* --------------------------- Question # 02 -----------------------------------------*/
+mysql> 
+mysql> CREATE DATABASE school_system;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| bs_6b              |
+| employees          |
+| mysql              |
+| performance_schema |
+| school_system      |
+| sys                |
+| user_reg           |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> USE school_system;
+Database changed
+mysql> 
+mysql> 
+mysql> 
+mysql> CREATE TABLE Marks(
+    -> mark_id           int           NOT NULL,
+    -> student_id        int           NOT NULL,
+    -> subject_id        int           NOT NULL,
+    -> date              DATE          NOT NULL,
+    -> mark              int           NOT NULL,
+    -> 
+    -> index(student_id),
+    -> index(subject_id),
+    -> 
+    -> FOREIGN KEY (student_id) REFERENCES Students(student_id) ON DELETE CASCADE,
+    -> FOREIGN KEY (subject_id) REFERENCES Subjects(subject_id) ON DELETE CASCADE
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> 
+mysql> 
+mysql> CREATE TABLE Students(
+    -> student_id      int            NOT NULL,
+    -> first_name      varchar(15)    NOT NULL,
+    -> last_name       varchar(15)    NOT NULL,
+    -> group_id        int            NOT NULL,
+    -> 
+    -> PRIMARY KEY(student_id),
+    -> FOREIGN KEY (group_id) REFERENCES Groups(group_id) ON DELETE CASCADE
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> 
+mysql> CREATE TABLE GROUPS(
+    -> group_id       int             NOT NULL,
+    -> name           varchar(15)     NOT NULL,
+    -> 
+    -> PRIMARY KEY(group_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> 
+mysql> CREATE TABLE Subjects(
+    -> subject_id      int            NOT NULL,
+    -> title           varchar(15)    NOT NULL,
+    -> 
+    -> PRIMARY KEY(subject_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> 
+mysql> CREATE TABLE Subject_Teacher(
+    -> subject_id      int           NOT NULL,
+    -> teacher_id      int           NOT NULL,
+    -> group_id        int           NOT NULL,
+    -> 
+    -> index(subject_id),
+    -> index(teacher_id),
+    -> index(group_id),
+    -> 
+    -> FOREIGN KEY (subject_id) REFERENCES Subjects(subject_id) ON DELETE CASCADE,
+    -> FOREIGN KEY (teacher_id) REFERENCES Teachers(teacher_id) ON DELETE CASCADE,
+    -> FOREIGN KEY (group_id) REFERENCES Groups(group_id) ON DELETE CASCADE
+    -> 
+    -> 
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> 
+mysql> 
+mysql> CREATE TABLE Teachers(
+    -> teacher_id int NOT NULL,
+    -> first_name1 varchar(15) NOT NULL,
+    -> last_name1 varchar(15) NOT NULL,
+    -> PRIMARY KEY(teacher_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> 
+mysql> SHOW TABLES;
++-------------------------+
+| Tables_in_school_system |
++-------------------------+
+| groups                  |
+| marks                   |
+| students                |
+| subject_teacher         |
+| subjects                |
+| teachers                |
++-------------------------+
+6 rows in set (0.00 sec)
+
+mysql> DESCRIBE GROUPS;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| group_id | int(11)     | NO   | PRI | NULL    |       |
+| name     | varchar(15) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE MARKS;
++------------+---------+------+-----+---------+-------+
+| Field      | Type    | Null | Key | Default | Extra |
++------------+---------+------+-----+---------+-------+
+| mark_id    | int(11) | NO   |     | NULL    |       |
+| student_id | int(11) | NO   | MUL | NULL    |       |
+| subject_id | int(11) | NO   | MUL | NULL    |       |
+| date       | date    | NO   |     | NULL    |       |
+| mark       | int(11) | NO   |     | NULL    |       |
++------------+---------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE STUDENTS;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| student_id | int(11)     | NO   | PRI | NULL    |       |
+| first_name | varchar(15) | NO   |     | NULL    |       |
+| last_name  | varchar(15) | NO   |     | NULL    |       |
+| group_id   | int(11)     | NO   | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE SUBJECT_TEACHER;
++------------+---------+------+-----+---------+-------+
+| Field      | Type    | Null | Key | Default | Extra |
++------------+---------+------+-----+---------+-------+
+| subject_id | int(11) | NO   | MUL | NULL    |       |
+| teacher_id | int(11) | NO   | MUL | NULL    |       |
+| group_id   | int(11) | NO   | MUL | NULL    |       |
++------------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE SUBJECTS;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| subject_id | int(11)     | NO   | PRI | NULL    |       |
+| title      | varchar(15) | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE TEACHERS;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| teacher_id  | int(11)     | NO   | PRI | NULL    |       |
+| first_name1 | varchar(15) | NO   |     | NULL    |       |
+| last_name1  | varchar(15) | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> COMMITS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COMMITS' at line 1
+mysql> 
+mysql> 
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
