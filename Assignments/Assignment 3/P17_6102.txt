@@ -1,0 +1,197 @@
+					Assignment 3
+Name: Basharat Hussain
+Roll No:P17-6102
+Section: 6B
+
+mysql> 			1. MySQL Indexes
+
+
+mysql> SOURCE C:/Users/basha/OneDrive/Desktop/Database system/Assignments/Assignment 3/assign3.sql;
+Query OK, 1 row affected (0.00 sec)
+
+Database changed
+Query OK, 0 rows affected (0.27 sec)
+
+Query OK, 0 rows affected (0.20 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+Query OK, 1 row affected (0.04 sec)
+
+Query OK, 1 row affected (0.04 sec)
+
+mysql> 
+mysql> 
+mysql> 
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| bank               |
+| bs_6b              |
+| employees_v2       |
+| mysql              |
+| nutec              |
+| performance_schema |
+| person             |
+| person1            |
+| person2            |
+| sales_co           |
+| school_system      |
+| sys                |
+| university         |
+| user_reg           |
+| useraccount        |
++--------------------+
+16 rows in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> use person2;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_person2 |
++-------------------+
+| summary           |
+| users             |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from  users;
++---------+----------+----------+-------------------+
+| user_id | username | password | email             |
++---------+----------+----------+-------------------+
+|       1 | ali      | max      | am@gmail.com      |
+|       2 | super    | user1    | sup@gmail.com     |
+|       3 | fast     | exam12   | fast123@gmail.com |
+|       4 | nawaz    | vpn68    | ns420@gmail.com   |
++---------+----------+----------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> 				Question 1
+
+mysql> create INDEX single_column_index 
+    -> ON users(email);
+Query OK, 0 rows affected (0.27 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+mysql> 				Question 2
+
+
+mysql> CREATE INDEX composite_column_index
+    -> ON users(username, password);
+Query OK, 0 rows affected (0.24 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+mysql> 				Question 3
+
+mysql> SHOW INDEX FROM users;
++-------+------------+------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table | Non_unique | Key_name               | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++-------+------------+------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| users |          0 | PRIMARY                |            1 | user_id     | A         |           4 |     NULL | NULL   |      | BTREE      |         |               |
+| users |          1 | single_column_index    |            1 | email       | A         |           4 |     NULL | NULL   | YES  | BTREE      |         |               |
+| users |          1 | composite_column_index |            1 | username    | A         |           4 |     NULL | NULL   | YES  | BTREE      |         |               |
+| users |          1 | composite_column_index |            2 | password    | A         |           4 |     NULL | NULL   | YES  | BTREE      |         |               |
++-------+------------+------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 				Question 4
+
+mysql> ALTER TABLE Users
+    -> DROP INDEX single_column_index;
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+mysql> ALTER TABLE Users
+    -> DROP INDEX composite_column_index;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+mysql> 
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> exit;
+
+
+				Question 5
+
+Implicit indexes are indexes that are automatically created by the database 
+server when an object is created. Indexes are automatically created for primary 
+key constraints and unique constraints.
+A unique index does not allow any duplicate values to be inserted into the table. 
+Unique indexes are used not only for performance, but also for data integrity. The 
+basic syntax is as follows.
+
+CREATE UNIQUE INDEX index_name
+ON table_name(column_name);
+
+
+
+
+			2. NoSQL (MongoDB) Indexes
+
+
+
+					Question 1
+
+Indexes are important for faster and efficient searching of documents in a collection.
+Indexes can be created by using the createIndex method. Indexes can be created on just one field or multiple field values.
+Indexes can be found by using the getIndexes method.
+Indexes can be removed by using the dropIndex for single indexes or dropIndexes for dropping all indexes.
+
+
+In the example below, the Employeeid "1" and EmployeeCode "AA" are used to index the documents in the 
+collection. So when a query search is made, these indexes will be used to quickly and efficiently find 
+the required documents in the collection.
+Example:
+{
+	Employeeid   : 1
+	EmployeeCode : AA
+	EmployeeName : "joe"
+	Awards       : 1
+	Countery     : Pakistan
+}
+
+
+					Question 2
+
+YES there is difference between commands of dropping an index in
+MySQL and MongoDB
+In mongodb remove INDEX by using this command dropIndex()
+while in mysql to remove INDEX we use this command 
+ALTER TABLE table_name
+DROP INDEX index_name;
+
+In mongodb to remove all of the indexes at once in the collection, one 
+can use the dropIndexes command. while in mysql we cannot drop all indexes at once from database easily.
+
+
+					Question 3
+
+ As we can see in above figure  getIndexes() command is used.  This command is use to find all 
+ the indexes in a collection. the output return a document in which two indexes in the collection
+ are present, these indexes are _id field and name fied. also :1 indicates that field values
+ in the index are created in ascending order.
